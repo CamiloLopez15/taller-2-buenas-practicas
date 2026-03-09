@@ -140,11 +140,11 @@ async function showMenu() {
   console.log('╔════════════════════════════════════════╗');
   console.log('║     INVENTORY MANAGEMENT SYSTEM        ║');
   console.log('╚════════════════════════════════════════╝');
-  console.log('\n1. Add Product');
-  console.log('2. List Products');
-  console.log('3. Update Product');
-  console.log('4. Delete Product');
-  console.log('5. Exit\n');
+  console.log('\n  1. Add Product');
+  console.log('  2. List Products');
+  console.log('  3. Update Product');
+  console.log('  4. Delete Product');
+  console.log('  5. Exit\n');
 }
 
 async function handleAddProduct() {
