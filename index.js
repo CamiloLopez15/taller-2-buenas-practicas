@@ -15,18 +15,22 @@ class InventorySystem {
     if (!name || name.trim() === '') {
       return { success: false, message: 'Product name cannot be empty.' };
     }
-    if (price <= 0 || isNaN(price)) {
+
+    const parsedPrice = parseFloat(price);
+    if (isNaN(parsedPrice) || parsedPrice <= 0) {
       return { success: false, message: 'Price must be a positive number.' };
     }
-    if (quantity <= 0 || !Number.isInteger(quantity)) {
+
+    const parsedQuantity = parseInt(quantity);
+    if (isNaN(parsedQuantity) || parsedQuantity <= 0) {
       return { success: false, message: 'Quantity must be a positive integer.' };
     }
 
     const product = {
       id: this.nextId++,
       name: name.trim(),
-      price: parseFloat(price),
-      quantity: parseInt(quantity)
+      price: parsedPrice,
+      quantity: parsedQuantity
     };
 
     this.products.push(product);
@@ -67,15 +71,21 @@ class InventorySystem {
     const oldPrice = product.price;
     const oldQuantity = product.quantity;
 
-    if (newPrice !== null && (newPrice <= 0 || isNaN(newPrice))) {
-      return { success: false, message: 'Price must be a positive number.' };
-    }
-    if (newQuantity !== null && (newQuantity <= 0 || !Number.isInteger(newQuantity))) {
-      return { success: false, message: 'Quantity must be a positive integer.' };
+    if (newPrice !== null) {
+      const parsedPrice = parseFloat(newPrice);
+      if (isNaN(parsedPrice) || parsedPrice <= 0) {
+        return { success: false, message: 'Price must be a positive number.' };
+      }
+      product.price = parsedPrice;
     }
 
-    if (newPrice !== null) product.price = parseFloat(newPrice);
-    if (newQuantity !== null) product.quantity = parseInt(newQuantity);
+    if (newQuantity !== null) {
+      const parsedQuantity = parseInt(newQuantity);
+      if (isNaN(parsedQuantity) || parsedQuantity <= 0) {
+        return { success: false, message: 'Quantity must be a positive integer.' };
+      }
+      product.quantity = parsedQuantity;
+    }
 
     const message = `Product "${product.name}" updated. (Price: $${oldPrice.toFixed(2)} → $${product.price.toFixed(2)}, Quantity: ${oldQuantity} → ${product.quantity})`;
     return { success: true, message };
@@ -130,11 +140,11 @@ async function showMenu() {
   console.log('╔════════════════════════════════════════╗');
   console.log('║     INVENTORY MANAGEMENT SYSTEM        ║');
   console.log('╚════════════════════════════════════════╝');
-  console.log('\n1. Add Product');
-  console.log('2. List Products');
-  console.log('3. Update Product');
-  console.log('4. Delete Product');
-  console.log('5. Exit\n');
+  console.log('\n  1. Add Product');
+  console.log('  2. List Products');
+  console.log('  3. Update Product');
+  console.log('  4. Delete Product');
+  console.log('  5. Exit\n');
 }
 
 async function handleAddProduct() {
